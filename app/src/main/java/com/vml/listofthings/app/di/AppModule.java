@@ -37,7 +37,7 @@ public class AppModule {
     @Provides @Singleton
     @Named("aboutSummary")
     String provideAboutSummary() {
-        return BuildConfig.VERSION_NAME + " (" + BuildConfig.GIT_SHA + ")";
+        return BuildConfig.VERSION_NAME;
     }
 
     @Provides

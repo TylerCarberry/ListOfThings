@@ -10,18 +10,15 @@ retrolambda {
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         applicationId "com.vml.listofthings"
         minSdkVersion 21
-        targetSdkVersion 23
-        versionCode gitCommitCount()
+        targetSdkVersion 25
+        versionCode 10
         versionName "1.0"
-        buildConfigField "String", "BUILD_TIME", "\"${buildTime()}\""
-        buildConfigField "String", "GIT_SHA", "\"${gitSha()}\""
-        buildConfigField "String", "GIT_BRANCH", "\"${gitBranch()}\""
 
     }
     buildTypes {
@@ -33,7 +30,7 @@ android {
     productFlavors {
         dev {
             applicationId "com.vml.thisofthings.dev"
-            versionName "${android.defaultConfig.versionName}-${buildTime()}-${gitBranch()}"
+            versionName "10"
             resValue "string", "app_name", "ListOfThings"
         }
         prod {
@@ -50,9 +47,9 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     devCompile project(path: ':data', configuration: 'devDebug')
     prodCompile project(path: ':data', configuration: 'devDebug')
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:recyclerview-v7:24.0.0'
-    compile 'com.android.support:design:24.0.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
 
     //https://github.com/JakeWharton/butterknife
     compile 'com.jakewharton:butterknife:7.0.1'
@@ -79,27 +76,4 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-}
-
-import java.text.SimpleDateFormat
-
-def buildTime() {
-    def df = new SimpleDateFormat("yyyyMMddHHmm")
-    return df.format(new Date())
-}
-
-def gitCommitCount() {
-    return "git rev-list HEAD --first-parent --count".execute().text.trim().toInteger()
-}
-
-def gitTag() {
-    return "git describe --dirty=".execute().text.trim()
-}
-
-def gitSha() {
-    return "git rev-parse --short HEAD".execute().text.trim()
-}
-
-def gitBranch() {
-    return "git rev-parse --abbrev-ref HEAD".execute().text.trim()
 }
